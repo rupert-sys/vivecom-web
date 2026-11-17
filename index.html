@@ -118,6 +118,14 @@ section.band { padding-block: 80px; }
 /* Soluciones por necesidad */
 .needs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
 .need { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: grid; gap: 10px; align-content: start; }
+.ico { width: 46px; height: 46px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
+.ico svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.prod .head { display: flex; align-items: center; gap: 12px; }
+.need .ico { background: var(--ink); color: var(--yellow); }
+.hero-art { display: grid; gap: 20px; justify-items: center; }
+.hero-art .console { width: 100%; }
+.hero-art svg.shield { width: min(240px, 60vw); height: auto; }
+@media (max-width: 880px) { .hero-art svg.shield { display: none; } }
 .need h3 { font-size: 18px; }
 .need p { margin: 0; color: var(--muted); font-size: 15px; }
 .need .uses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
@@ -234,6 +242,19 @@ footer a { color: var(--on-ink); }
         <a class="btn ghost" href="#contacto">Solicitar cotización</a>
       </div>
     </div>
+    <div class="hero-art">
+    <svg class="shield" viewBox="0 0 240 240" aria-hidden="true">
+      <g stroke="#fcd307" fill="none" stroke-width="1.5" opacity=".55">
+        <circle cx="120" cy="120" r="112" stroke-dasharray="3 7"/>
+        <circle cx="120" cy="120" r="86" opacity=".6"/>
+      </g>
+      <g fill="#fcd307"><circle cx="120" cy="8" r="4"/><circle cx="232" cy="120" r="4"/><circle cx="41" cy="199" r="4"/><circle cx="199" cy="199" r="3"/><circle cx="41" cy="41" r="3"/></g>
+      <path d="M120 44l58 22v44c0 38-25 62-58 72-33-10-58-34-58-72V66z" fill="#1b1b1b" stroke="#fcd307" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M120 60l44 17v34c0 29-19 47-44 55-25-8-44-26-44-55V77z" fill="none" stroke="#d80000" stroke-width="2" opacity=".9"/>
+      <rect x="98" y="106" width="44" height="36" rx="5" fill="#fcd307"/>
+      <path d="M106 106v-10a14 14 0 0128 0v10" fill="none" stroke="#fcd307" stroke-width="6" stroke-linecap="round"/>
+      <circle cx="120" cy="121" r="5" fill="#111"/><rect x="118" y="124" width="4" height="9" rx="2" fill="#111"/>
+    </svg>
     <div class="console" aria-label="Ejemplo de estado de una red protegida">
       <span class="t">Ejemplo · estado de la red</span>
       <div class="row"><span>Perímetro · NGFW</span><span class="ok">protegido</span></div>
@@ -241,6 +262,7 @@ footer a { color: var(--on-ink); }
       <div class="row"><span>Intentos de ransomware</span><span class="ok">0 cifrados</span></div>
       <div class="row"><span>Acceso remoto · ZTNA</span><span class="ok">sin VPN</span></div>
       <div class="row"><span>Clúster HCI</span><span class="warn">3 nodos · 61%</span></div>
+    </div>
     </div>
   </div>
 </section>
@@ -359,6 +381,26 @@ footer a { color: var(--on-ink); }
 </footer>
 
 <script>
+const ICONS = {
+  wall: "M3 5h18v14H3z M3 9.7h18 M3 14.3h18 M9 5v4.7 M15 5v4.7 M6 9.7v4.6 M12 9.7v4.6 M18 9.7v4.6 M9 14.3V19 M15 14.3V19",
+  globe: "M12 3a9 9 0 100 18 9 9 0 000-18z M3 12h18 M12 3c2.5 2.7 3.5 5.7 3.5 9s-1 6.3-3.5 9 M12 3c-2.5 2.7-3.5 5.7-3.5 9s1 6.3 3.5 9",
+  radar: "M12 3a9 9 0 100 18 9 9 0 000-18z M12 7a5 5 0 100 10 5 5 0 000-10z M12 12l6.4-6.4 M12 12h.01",
+  laptop: "M4 5h16v11H4z M2 19h20 M12 7.5l3 1.1v2.2c0 1.8-1.3 3-3 3.4-1.7-.4-3-1.6-3-3.4V8.6z",
+  chip: "M7 7h10v10H7z M10 3v4 M14 3v4 M10 17v4 M14 17v4 M3 10h4 M3 14h4 M17 10h4 M17 14h4",
+  layers: "M12 3l9 5-9 5-9-5z M3 12.5l9 5 9-5 M3 17l9 5 9-5",
+  eye: "M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z M12 9a3 3 0 100 6 3 3 0 000-6z",
+  spark: "M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z",
+  cloudlock: "M7 17a4.5 4.5 0 01-.5-9A6 6 0 0118 8.5 4.3 4.3 0 0117.5 17 M10 15h4v4h-4z M10.8 15v-1a1.2 1.2 0 012.4 0v1",
+  lock: "M5 11h14v10H5z M8 11V7a4 4 0 018 0v4 M12 15v2",
+  shield: "M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z M8.5 12l2.5 2.5 4.5-5",
+  server: "M4 4h16v6H4z M4 14h16v6H4z M8 7h.01 M8 17h.01 M12 7h4 M12 17h4",
+  cloud: "M7 19a5 5 0 01-.6-9.96A6 6 0 0118 9.5a4.5 4.5 0 01-.5 9.5z",
+  desktop: "M3 4h18v12H3z M8 20h8 M12 16v4",
+  db: "M12 3c4.4 0 8 1.3 8 3s-3.6 3-8 3-8-1.3-8-3 3.6-3 8-3z M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6 M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"
+};
+const ICON_OF = { ngfw:"wall", swg:"globe", ndr:"radar", epp:"laptop", esa:"chip", xdr:"layers", mdr:"eye", ia:"spark", sase:"cloudlock", ztg:"lock", sga:"shield", hci:"server", scp:"cloud", vdi:"desktop", storage:"db" };
+const icon = id => `<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="${ICONS[ICON_OF[id]] || ICONS.shield}"/></svg></span>`;
+
 const PRODUCTS = [
   { id:"ngfw", name:"Firewall de nueva generación", cat:"red", catLabel:"Seguridad de red",
     desc:"Firewall de nueva generación con detección de malware por IA e inteligencia de amenazas para frenar ataques en el perímetro.",
@@ -440,8 +482,7 @@ function renderGrid() {
   const list = current === "all" ? PRODUCTS : PRODUCTS.filter(p => p.cat === current);
   $("#grid").innerHTML = list.map(p => `
     <article class="prod" id="p-${p.id}">
-      <span class="cat">${p.catLabel}</span>
-      <h3>${p.name}</h3>
+      <div class="head">${icon(p.id)}<div><span class="cat">${p.catLabel}</span><h3 style="margin-top:6px">${p.name}</h3></div></div>
       <p>${p.desc}</p>
       <ul>${p.feats.map(f => `<li>${f}</li>`).join("")}</ul>
       <div class="deploy">${p.deploy.map(d => `<span class="tag">${d}</span>`).join("")}</div>
@@ -452,7 +493,7 @@ function renderGrid() {
 }
 function renderNeeds() {
   $("#needs").innerHTML = NEEDS.map(n => `
-    <div class="need"><h3>${n.t}</h3><p>${n.d}</p>
+    <div class="need">${icon(n.p[0])}<h3>${n.t}</h3><p>${n.d}</p>
       <div class="uses">${n.p.map(id => `<button type="button" class="chip" data-go="${id}">${byId[id].name}</button>`).join("")}</div>
     </div>`).join("");
 }
