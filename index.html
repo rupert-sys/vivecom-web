@@ -529,7 +529,7 @@ $("#quoteForm").addEventListener("submit", e => {
 /* Asistente virtual: responde preguntas frecuentes y, si no sabe, pasa a WhatsApp */
 (function () {
   const WA = "525613996126";
-  const waLink = q => `https://wa.me/${WA}?text=${encodeURIComponent("Hola VIVEcom, vengo de su página. " + (q ? "Tengo esta pregunta: " + q : "Quiero hablar con un asesor."))}`;
+  const waLink = q => `https://wa.me/${WA}?text=${encodeURIComponent("Hola, me interesa contactarlo porque no pude resolver mi duda en la página." + (q ? " Mi pregunta: " + q : ""))}`;
   const norm = t => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9ñ ]/g, " ");
   const prodBtns = ids => ids.map(id => ({ go: id, label: byId[id].name }));
   const FAQ = [
