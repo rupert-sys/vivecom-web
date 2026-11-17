@@ -17,10 +17,12 @@
   --fg: #161616;
   --muted: #5a5a5a;
   --line: #e2e2de;
-  --accent: #d80000;
-  --accent-strong: #b00000;
-  --accent-soft: #fdeaea;
-  --on-accent: #ffffff;
+  --accent: #fcd307;        /* amarillo de marca: rellenos y botones */
+  --accent-strong: #e6bf00;  /* hover de botones */
+  --accent-ink: #7a5d00;     /* amarillo oscuro legible sobre blanco */
+  --accent-soft: #fff7cc;
+  --on-accent: #111111;
+  --shadow: 0 1px 2px #0000000d, 0 8px 24px #0000000a;
   --yellow: #fcd307;
   --header: #ffffff;
   --on-ink: #f2f2f2;
@@ -33,13 +35,13 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #111111; --surface: #1a1a1a; --fg: #ededed; --muted: #a6a6a6; --line: #2d2d2d;
-    --accent: #ff5050; --accent-strong: #ff8080; --accent-soft: #3a1515; --on-accent: #1a0505;
+    --accent: #fcd307; --accent-strong: #ffe14d; --accent-ink: #fcd307; --accent-soft: #2e2a10; --on-accent: #111111; --shadow: 0 1px 2px #00000040;
     --ink: #0a0a0a; --ink-2: #1f1f1f; color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #111111; --surface: #1a1a1a; --fg: #ededed; --muted: #a6a6a6; --line: #2d2d2d;
-    --accent: #ff5050; --accent-strong: #ff8080; --accent-soft: #3a1515; --on-accent: #1a0505;
+    --accent: #fcd307; --accent-strong: #ffe14d; --accent-ink: #fcd307; --accent-soft: #2e2a10; --on-accent: #111111; --shadow: 0 1px 2px #00000040;
     --ink: #0a0a0a; --ink-2: #1f1f1f; color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -50,23 +52,23 @@ html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--f-body); }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 30; background: var(--header); }
 img { max-width: 100%; }
-a { color: var(--accent-strong); }
+a { color: var(--accent-ink); }
 h1, h2, h3 { font-family: var(--f-display); line-height: 1.15; text-wrap: balance; margin: 0; }
 .wrap { max-width: 1160px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
-.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.eyebrow { font: 500 12px/1 var(--f-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-ink); }
+:focus-visible { outline: 2px solid var(--accent-ink); outline-offset: 3px; border-radius: 4px; }
 
 /* Header */
-header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--header); border-bottom: 1px solid #e6e6e6; box-shadow: 0 1px 0 #00000008; }
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; border-top: 3px solid #fcd307; background: var(--header); border-bottom: 1px solid #e6e6e6; box-shadow: 0 1px 0 #00000008; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
 .logo { display: block; line-height: 0; }
 .logo img { height: 64px; width: auto; display: block; }
 @media (max-width: 520px) { .logo img { height: 48px; } }
 nav.main { display: flex; gap: 4px; flex-wrap: wrap; }
 nav.main a { color: #222222; text-decoration: none; font: 500 13px/1 var(--f-body); letter-spacing: .06em; text-transform: uppercase; padding: 9px 12px; border-radius: 6px; }
-nav.main a:hover { color: #d80000; background: #f3f3f3; }
-nav.main a.cta { color: #ffffff; background: #d80000; }
-nav.main a.cta:hover { background: #b00000; color: #ffffff; }
+nav.main a:hover { color: #111111; background: #f3f3f3; box-shadow: inset 0 -2px 0 #fcd307; }
+nav.main a.cta { color: #111111; background: #fcd307; font-weight: 600; }
+nav.main a.cta:hover { background: #e6bf00; color: #111111; box-shadow: none; }
 .menu-btn { display: none; background: none; border: 1px solid #cccccc; color: #222222; border-radius: 6px; padding: 8px 12px; font: 500 13px var(--f-body); }
 @media (max-width: 820px) {
   .menu-btn { display: block; }
@@ -111,14 +113,14 @@ section.band { padding-block: 80px; }
 .services article:last-child { border-right: 0; }
 .services h3 { font-size: 19px; margin: 10px 0 8px; }
 .services p { color: var(--muted); margin: 0; font-size: 15px; }
-.services .step { font: 500 12px var(--f-mono); color: var(--accent); letter-spacing: .1em; }
+.services .step { font: 500 12px var(--f-mono); color: var(--accent-ink); letter-spacing: .1em; }
 @media (max-width: 880px) { .services { grid-template-columns: 1fr 1fr; } .services article { border-right: 0; padding-left: 0; border-bottom: 1px solid var(--line); padding-bottom: 22px; } }
 @media (max-width: 520px) { .services { grid-template-columns: 1fr; } }
 
 /* Soluciones por necesidad */
 .needs { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
-.need { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: grid; gap: 10px; align-content: start; }
-.ico { width: 46px; height: 46px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
+.need { background: var(--surface); box-shadow: var(--shadow); border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: grid; gap: 10px; align-content: start; }
+.ico { width: 46px; height: 46px; border-radius: 10px; background: #161616; color: #fcd307; display: grid; place-items: center; flex: none; }
 .ico svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .prod .head { display: flex; align-items: center; gap: 12px; }
 .need .ico { background: var(--ink); color: var(--yellow); }
@@ -129,22 +131,24 @@ section.band { padding-block: 80px; }
 .need h3 { font-size: 18px; }
 .need p { margin: 0; color: var(--muted); font-size: 15px; }
 .need .uses { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
-.chip { font: 500 12px/1 var(--f-mono); padding: 6px 8px; border-radius: 5px; background: var(--accent-soft); color: var(--accent-strong); border: 0; cursor: pointer; }
-.chip:hover { outline: 1px solid var(--accent); }
+.chip { font: 500 12px/1 var(--f-mono); padding: 7px 9px; border-radius: 5px; background: transparent; color: var(--fg); border: 1px solid var(--line); cursor: pointer; }
+.chip:hover { border-color: var(--accent); background: var(--accent-soft); }
 
 /* Catálogo */
-.catalog-band { background: var(--surface); border-block: 1px solid var(--line); }
+.catalog-band { background: var(--bg); border-block: 1px solid var(--line); }
+.prod:hover { transform: translateY(-2px); box-shadow: 0 2px 4px #00000012, 0 14px 32px #00000014; }
+.sec-head h2::after { content: ""; display: block; width: 56px; height: 4px; background: var(--accent); margin-top: 16px; border-radius: 2px; }
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
 .filters button { font: 500 14px/1 var(--f-body); padding: 10px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
 .filters button[aria-pressed="true"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
 .filters .count { font-family: var(--f-mono); font-size: 12px; opacity: .65; margin-left: 4px; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-.prod { border: 1px solid var(--line); border-radius: var(--r); padding: 20px; display: flex; flex-direction: column; gap: 12px; background: var(--bg); min-width: 0; }
+.prod { border: 1px solid var(--line); border-radius: var(--r); padding: 22px; display: flex; flex-direction: column; gap: 12px; background: var(--surface); box-shadow: var(--shadow); transition: transform .15s, box-shadow .15s; min-width: 0; }
 .prod .cat { font: 500 11px/1 var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .prod h3 { font-size: 19px; }
 .prod p { margin: 0; color: var(--muted); font-size: 15px; flex: 1; }
 .prod ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 14px; }
-.prod li::before { content: "› "; color: var(--accent); font-weight: 600; }
+.prod li::before { content: "› "; color: var(--accent-ink); font-weight: 600; }
 .prod .deploy { display: flex; gap: 6px; flex-wrap: wrap; }
 .tag { font: 500 11px/1 var(--f-mono); padding: 5px 7px; border-radius: 4px; border: 1px solid var(--line); color: var(--muted); }
 .prod .actions { display: flex; gap: 8px; align-items: center; justify-content: space-between; padding-top: 4px; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 14px; }
@@ -169,7 +173,7 @@ section.band { padding-block: 80px; }
 .contact-info .item { display: grid; gap: 2px; }
 .contact-info .k { font: 500 12px var(--f-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
 .contact-info .v { font: 600 18px var(--f-display); user-select: all; }
-form.quote { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
+form.quote { background: var(--surface); box-shadow: var(--shadow); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: grid; gap: 16px; grid-template-columns: 1fr 1fr; }
 form.quote .full { grid-column: 1 / -1; }
 @media (max-width: 560px) { form.quote { grid-template-columns: 1fr; padding: 20px; } }
 label { display: grid; gap: 6px; font-size: 14px; font-weight: 500; }
@@ -178,7 +182,7 @@ textarea { min-height: 110px; resize: vertical; }
 .picked { display: flex; flex-wrap: wrap; gap: 6px; min-height: 28px; }
 .picked .chip::after { content: " ×"; }
 .picked .empty { font-size: 13px; color: var(--muted); }
-.status { font-size: 14px; color: var(--accent-strong); min-height: 1.4em; }
+.status { font-size: 14px; color: var(--accent-ink); min-height: 1.4em; }
 form.quote .btn { background: var(--accent); color: var(--on-accent); justify-self: start; }
 
 .chat { border: 0; cursor: pointer; position: fixed; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 25; display: inline-flex; align-items: center; gap: 10px; background: #e2b80c; color: #ffffff; font: 400 17px/1 var(--f-display); padding: 14px 18px; border-radius: 6px; text-decoration: none; box-shadow: 0 6px 20px #00000033; }
@@ -197,7 +201,7 @@ form.quote .btn { background: var(--accent); color: var(--on-accent); justify-se
 .msg.b { background: var(--surface); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 2px; }
 .msg.u { background: var(--accent); color: var(--on-accent); align-self: flex-end; border-bottom-right-radius: 2px; }
 .msg .acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; white-space: normal; }
-.msg .acts a, .msg .acts button { font: 600 12px/1 var(--f-body); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent-strong); text-decoration: none; cursor: pointer; }
+.msg .acts a, .msg .acts button { font: 600 12px/1 var(--f-body); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); text-decoration: none; cursor: pointer; }
 .msg .acts a.wa { background: #1f9d55; border-color: #1f9d55; color: #fff; }
 .bot .quick { display: flex; gap: 6px; overflow-x: auto; padding: 10px 12px 0; background: var(--surface); border-top: 1px solid var(--line); }
 .bot .quick button { flex: none; font: 500 12px/1 var(--f-body); padding: 8px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
@@ -206,13 +210,26 @@ form.quote .btn { background: var(--accent); color: var(--on-accent); justify-se
 .bot form button { border: 0; background: var(--accent); color: var(--on-accent); border-radius: 8px; padding: 0 14px; font: 600 14px var(--f-body); cursor: pointer; }
 .bot .foot { font-size: 11px; color: var(--muted); text-align: center; padding: 0 12px 10px; background: var(--surface); }
 .bot .foot a { color: #1f9d55; font-weight: 600; }
-footer { background: var(--ink); color: var(--on-ink-muted); font-size: 13px; }
-footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
+.util { background: #0d0d0d; color: #a8a8a8; font-size: 12.5px; }
+.util .wrap { display: flex; justify-content: space-between; gap: 16px; padding-block: 8px; flex-wrap: wrap; }
+.util-c { display: flex; gap: 20px; color: #e6e6e6; }
+@media (max-width: 720px) { .util .wrap > span:first-child { display: none; } .util-c { gap: 14px; } }
+footer { background: var(--ink); color: var(--on-ink-muted); font-size: 14px; border-top: 3px solid #fcd307; }
+.fgrid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; padding-block: 48px 32px; }
+.fgrid h4 { font: 400 16px var(--f-display); color: #fff; margin: 0 0 14px; }
+.fgrid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.fgrid a { color: var(--on-ink-muted); text-decoration: none; }
+.fgrid a:hover { color: #fcd307; }
+.fgrid p { margin: 12px 0 0; max-width: 36ch; }
+.fbottom { border-top: 1px solid #2a2a2a; }
+.fbottom .wrap { padding-block: 18px; font-size: 13px; }
+@media (max-width: 720px) { .fgrid { grid-template-columns: 1fr; gap: 28px; } }
 footer a { color: var(--on-ink); }
 </style>
 </head>
 <body>
 
+<div class="util"><div class="wrap"><span>Consultoría en ciberseguridad, nube y virtualización para empresas en México</span><span class="util-c"><span>ventas@vivecom.mx</span><span>+52 56 1399 6126</span></span></div></div>
 <header class="top">
   <div class="wrap">
     <a class="logo" href="#inicio"><img src="logo.png" alt="VIVEcom" width="158" height="106"></a>
@@ -250,7 +267,7 @@ footer a { color: var(--on-ink); }
       </g>
       <g fill="#fcd307"><circle cx="120" cy="8" r="4"/><circle cx="232" cy="120" r="4"/><circle cx="41" cy="199" r="4"/><circle cx="199" cy="199" r="3"/><circle cx="41" cy="41" r="3"/></g>
       <path d="M120 44l58 22v44c0 38-25 62-58 72-33-10-58-34-58-72V66z" fill="#1b1b1b" stroke="#fcd307" stroke-width="4" stroke-linejoin="round"/>
-      <path d="M120 60l44 17v34c0 29-19 47-44 55-25-8-44-26-44-55V77z" fill="none" stroke="#d80000" stroke-width="2" opacity=".9"/>
+      <path d="M120 60l44 17v34c0 29-19 47-44 55-25-8-44-26-44-55V77z" fill="none" stroke="#ffffff" stroke-width="1.5" opacity=".35"/>
       <rect x="98" y="106" width="44" height="36" rx="5" fill="#fcd307"/>
       <path d="M106 106v-10a14 14 0 0128 0v10" fill="none" stroke="#fcd307" stroke-width="6" stroke-linecap="round"/>
       <circle cx="120" cy="121" r="5" fill="#111"/><rect x="118" y="124" width="4" height="9" rx="2" fill="#111"/>
@@ -374,10 +391,32 @@ footer a { color: var(--on-ink); }
 </section>
 
 <footer>
-  <div class="wrap">
-    <span>© <span id="yr">2026</span> VIVEcom · Consultoría en TI, ciberseguridad y nube · México</span>
-    <span>ventas@vivecom.mx · +52 56 1399 6126</span>
+  <div class="wrap fgrid">
+    <div>
+      <h4>VIVEcom</h4>
+      <p>Consultora mexicana de TI. Diseñamos, implementamos y damos soporte a soluciones de ciberseguridad, nube y virtualización.</p>
+    </div>
+    <div>
+      <h4>Soluciones</h4>
+      <ul>
+        <li><a href="#productos">Seguridad de red</a></li>
+        <li><a href="#productos">Protección de equipos</a></li>
+        <li><a href="#productos">Operación de seguridad</a></li>
+        <li><a href="#productos">Acceso remoto seguro</a></li>
+        <li><a href="#productos">Infraestructura y nube</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Contacto</h4>
+      <ul>
+        <li>ventas@vivecom.mx</li>
+        <li>info@vivecom.mx</li>
+        <li>+52 56 1399 6126</li>
+        <li><a href="#contacto">Solicitar cotización</a></li>
+      </ul>
+    </div>
   </div>
+  <div class="fbottom"><div class="wrap">© <span id="yr">2026</span> VIVEcom · Todos los derechos reservados · México</div></div>
 </footer>
 
 <script>
@@ -411,10 +450,10 @@ const PRODUCTS = [
   { id:"ndr", name:"Detección de intrusos en la red", cat:"red", catLabel:"Seguridad de red",
     desc:"Detección y respuesta en la red: analiza el tráfico con aprendizaje automático para encontrar intrusos que ya están dentro.",
     feats:["Detección de comando y control (C2)","Movimiento lateral","Análisis de comportamiento"], deploy:["Equipo físico","Virtual"] },
-  { id:"epp", name:"Protección de equipos contra ransomware", cat:"endpoint", catLabel:"Endpoint",
+  { id:"epp", name:"Protección de equipos contra ransomware", cat:"endpoint", catLabel:"Protección de equipos",
     desc:"Protección para laptops, PCs y servidores que combina antivirus de nueva generación, EDR y administración centralizada.",
     feats:["NGAV + EDR en un solo agente","Anti-ransomware con reversión","Consola central"], deploy:["Nube","En sitio"] },
-  { id:"esa", name:"Seguridad para equipos sin agente", cat:"endpoint", catLabel:"Endpoint",
+  { id:"esa", name:"Seguridad para equipos sin agente", cat:"endpoint", catLabel:"Protección de equipos",
     desc:"Seguridad para equipos sin necesidad de instalar agente, con antivirus, prevención de intrusos y respuesta en un clic.",
     feats:["Sin agente","Prevención de intrusos","Respuesta con un clic"], deploy:["Nube"] },
   { id:"xdr", name:"Detección y respuesta extendida (XDR)", cat:"soc", catLabel:"Operación de seguridad",
@@ -452,7 +491,7 @@ const PRODUCTS = [
 const CATS = [
   { id:"all", label:"Todos" },
   { id:"red", label:"Seguridad de red" },
-  { id:"endpoint", label:"Endpoint" },
+  { id:"endpoint", label:"Protección de equipos" },
   { id:"soc", label:"Operación de seguridad" },
   { id:"acceso", label:"Acceso seguro" },
   { id:"infra", label:"Infraestructura y nube" }
