@@ -43,6 +43,7 @@
     --ink: #0a0a0a; --ink-2: #1f1f1f; color-scheme: dark;
 }
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--f-body); }
@@ -171,9 +172,31 @@ textarea { min-height: 110px; resize: vertical; }
 .status { font-size: 14px; color: var(--accent-strong); min-height: 1.4em; }
 form.quote .btn { background: var(--accent); color: var(--on-accent); justify-self: start; }
 
-.chat { position: fixed; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 25; display: inline-flex; align-items: center; gap: 10px; background: #e2b80c; color: #ffffff; font: 400 17px/1 var(--f-display); padding: 14px 18px; border-radius: 6px; text-decoration: none; box-shadow: 0 6px 20px #00000033; }
+.chat { border: 0; cursor: pointer; position: fixed; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 25; display: inline-flex; align-items: center; gap: 10px; background: #e2b80c; color: #ffffff; font: 400 17px/1 var(--f-display); padding: 14px 18px; border-radius: 6px; text-decoration: none; box-shadow: 0 6px 20px #00000033; }
 .chat:hover { background: #cfa800; }
 .chat svg { width: 24px; height: 24px; fill: currentColor; }
+/* Asistente virtual */
+.bot { position: fixed; right: max(16px, calc(env(safe-area-inset-right, 0px) + 16px)); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); z-index: 26; width: min(380px, calc(100vw - 32px)); height: min(560px, calc(100dvh - 120px)); background: var(--surface); color: var(--fg); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 16px 48px #0000004d; display: flex; flex-direction: column; overflow: hidden; }
+.bot header { background: var(--ink); color: #fff; padding: 14px 16px; display: flex; align-items: center; gap: 12px; border-bottom: 3px solid var(--yellow); }
+.bot header .av { width: 36px; height: 36px; border-radius: 50%; background: var(--yellow); color: #111; display: grid; place-items: center; font: 700 15px var(--f-display); flex: none; }
+.bot header .who { flex: 1; min-width: 0; line-height: 1.3; }
+.bot header .who b { font: 400 16px var(--f-display); display: block; }
+.bot header .who span { font-size: 12px; color: var(--on-ink-muted); }
+.bot header button { background: none; border: 0; color: #fff; font-size: 22px; line-height: 1; cursor: pointer; padding: 4px 8px; border-radius: 4px; }
+.bot .log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 10px; background: var(--bg); }
+.msg { max-width: 85%; padding: 10px 12px; border-radius: 10px; font-size: 14px; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.msg.b { background: var(--surface); border: 1px solid var(--line); align-self: flex-start; border-bottom-left-radius: 2px; }
+.msg.u { background: var(--accent); color: var(--on-accent); align-self: flex-end; border-bottom-right-radius: 2px; }
+.msg .acts { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; white-space: normal; }
+.msg .acts a, .msg .acts button { font: 600 12px/1 var(--f-body); padding: 8px 10px; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent-strong); text-decoration: none; cursor: pointer; }
+.msg .acts a.wa { background: #1f9d55; border-color: #1f9d55; color: #fff; }
+.bot .quick { display: flex; gap: 6px; overflow-x: auto; padding: 10px 12px 0; background: var(--surface); border-top: 1px solid var(--line); }
+.bot .quick button { flex: none; font: 500 12px/1 var(--f-body); padding: 8px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
+.bot form { display: flex; gap: 8px; padding: 10px 12px 12px; background: var(--surface); }
+.bot form input { flex: 1; min-width: 0; }
+.bot form button { border: 0; background: var(--accent); color: var(--on-accent); border-radius: 8px; padding: 0 14px; font: 600 14px var(--f-body); cursor: pointer; }
+.bot .foot { font-size: 11px; color: var(--muted); text-align: center; padding: 0 12px 10px; background: var(--surface); }
+.bot .foot a { color: #1f9d55; font-weight: 600; }
 footer { background: var(--ink); color: var(--on-ink-muted); font-size: 13px; }
 footer .wrap { padding-block: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; }
 footer a { color: var(--on-ink); }
@@ -311,7 +334,21 @@ footer a { color: var(--on-ink); }
   </div>
 </section>
 
-<a class="chat" href="#contacto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6L4.5 21l4.3-2.3c1 .3 2.1.4 3.2.4 5.5 0 10-3.6 10-8s-4.5-8-10-8zm-4 9.3a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm4 0a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm4 0a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6z"/></svg>¡Vamos a chatear!</a>
+<button class="chat" id="chatBtn" type="button" aria-expanded="false" aria-controls="bot"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 2.4 1.3 4.5 3.4 6L4.5 21l4.3-2.3c1 .3 2.1.4 3.2.4 5.5 0 10-3.6 10-8s-4.5-8-10-8zm-4 9.3a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm4 0a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6zm4 0a1.3 1.3 0 110-2.6 1.3 1.3 0 010 2.6z"/></svg>¡Vamos a chatear!</button>
+<section class="bot" id="bot" hidden aria-label="Asistente virtual VIVEcom">
+  <header>
+    <span class="av" aria-hidden="true">V</span>
+    <span class="who"><b>Asistente VIVEcom</b><span>Respuestas al momento · asesor por WhatsApp</span></span>
+    <button type="button" id="botClose" aria-label="Cerrar chat">×</button>
+  </header>
+  <div class="log" id="botLog" aria-live="polite"></div>
+  <div class="quick" id="botQuick"></div>
+  <form id="botForm" autocomplete="off">
+    <input id="botInput" placeholder="Escribe tu pregunta…" aria-label="Tu pregunta">
+    <button type="submit">Enviar</button>
+  </form>
+  <div class="foot">¿Prefieres a una persona? <a id="botWa" href="https://wa.me/525613996126" target="_blank" rel="noopener">Escríbenos por WhatsApp</a></div>
+</section>
 
 <footer>
   <div class="wrap">
@@ -487,6 +524,86 @@ $("#quoteForm").addEventListener("submit", e => {
     if (!reduce) requestAnimationFrame(frame);
   }
   size(); frame(); addEventListener("resize", () => { size(); if (reduce) frame(); });
+})();
+
+/* Asistente virtual: responde preguntas frecuentes y, si no sabe, pasa a WhatsApp */
+(function () {
+  const WA = "525613996126";
+  const waLink = q => `https://wa.me/${WA}?text=${encodeURIComponent("Hola VIVEcom, vengo de su página. " + (q ? "Tengo esta pregunta: " + q : "Quiero hablar con un asesor."))}`;
+  const norm = t => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9ñ ]/g, " ");
+  const prodBtns = ids => ids.map(id => ({ go: id, label: byId[id].name }));
+  const FAQ = [
+    { k: ["hola", "buenas", "buenos dias", "buenas tardes", "que tal"], a: "¡Hola! Soy el asistente de VIVEcom. Pregúntame sobre nuestros productos de ciberseguridad, nube y virtualización, cómo cotizar o cómo trabajamos." },
+    { k: ["precio", "precios", "costo", "cuesta", "cuanto", "tarifa", "presupuesto", "cotizacion", "cotizar"], a: "Cada proyecto se cotiza a la medida: depende del número de usuarios o equipos, de cuántos sitios tienes y de si lo quieres en equipo físico, virtual o en la nube.\n\nAgrega los productos que te interesan en el catálogo y llena el formulario, o escríbele a un asesor. Respondemos en menos de un día hábil.", acts: [{ href: "#contacto", label: "Ir al formulario" }, { wa: true, label: "Cotizar por WhatsApp" }] },
+    { k: ["que venden", "que hacen", "servicios", "que ofrecen", "productos", "catalogo"], a: "Diseñamos, implementamos y damos soporte a soluciones de:\n• Seguridad de red (firewall, filtrado web, detección en la red)\n• Protección de equipos (antivirus de nueva generación, EDR)\n• Operación de seguridad (XDR y monitoreo 24/7)\n• Acceso remoto seguro sin VPN y SASE\n• Virtualización: HCI, nube privada, escritorios virtuales y almacenamiento", acts: [{ href: "#productos", label: "Ver catálogo" }] },
+    { k: ["ransomware", "secuestro", "cifraron", "virus", "malware", "hackeo", "hackearon", "ataque"], a: "Para ransomware recomendamos protección en capas: el agente en cada equipo para frenar el cifrado, detección en la red para encontrar al intruso, y XDR para ver todo en una consola.\n\nSi estás sufriendo un ataque en este momento, escríbenos por WhatsApp de inmediato.", acts: [...prodBtns(["epp", "ndr", "xdr"]), { wa: true, label: "Tengo una emergencia" }] },
+    { k: ["firewall", "perimetro", "red", "sucursal", "sucursales", "internet", "navegacion", "filtrado", "sd wan", "sdwan"], a: "Para proteger tu red y sucursales: un firewall de nueva generación (IPS, antivirus y control de apps, con SD-WAN integrado), filtrado web para controlar la navegación, o SASE si tienes muchas sucursales o gente fuera de la oficina.", acts: prodBtns(["ngfw", "swg", "sase"]) },
+    { k: ["vpn", "remoto", "home office", "casa", "teletrabajo", "zero trust", "ztna", "acceso"], a: "Para trabajo remoto sin VPN usamos acceso Zero Trust: cada persona entra solo a las aplicaciones que necesita, verificando identidad y equipo todo el tiempo. Es más seguro y más simple que una VPN.", acts: prodBtns(["ztg", "sga", "sase"]) },
+    { k: ["antivirus", "endpoint", "laptop", "laptops", "computadoras", "equipos", "pc", "servidores", "edr"], a: "Para laptops, PCs y servidores: un solo agente con antivirus de nueva generación, EDR y reversión de ransomware, administrado desde una consola central (en la nube o en sitio). También hay opción sin agente.", acts: prodBtns(["epp", "esa"]) },
+    { k: ["vmware", "virtualizar", "virtualizacion", "hiperconvergente", "hci", "servidor", "data center", "centro de datos", "nube privada", "migrar", "broadcom"], a: "Para modernizar tu centro de datos o salir de VMware: infraestructura hiperconvergente que junta cómputo, almacenamiento y red en un clúster fácil de administrar, con herramienta de migración desde VMware. Encima puedes montar una nube privada.", acts: prodBtns(["hci", "scp", "astor"]) },
+    { k: ["vdi", "escritorio", "escritorios", "call center", "cliente ligero", "thin client"], a: "Con escritorios virtuales tu equipo trabaja desde cualquier dispositivo y los datos nunca salen de tu centro de datos. Ideal para call centers, sucursales y personal externo.", acts: prodBtns(["adesk", "hci"]) },
+    { k: ["almacenamiento", "storage", "nas", "san", "respaldo", "backup", "disco"], a: "Tenemos almacenamiento empresarial definido por software, con opciones all-flash para bloques, archivos y objetos, y respaldo integrado en la plataforma HCI.", acts: prodBtns(["astor", "hci"]) },
+    { k: ["soc", "monitoreo", "24 7", "24x7", "vigilancia", "no tengo equipo", "mdr", "xdr", "analista"], a: "Si no tienes equipo de seguridad, el servicio MDR pone a un centro de operaciones con más de 450 especialistas a vigilar tu red 24/7, cazar amenazas y responder por ti.", acts: prodBtns(["mdr", "xdr"]) },
+    { k: ["soporte", "garantia", "mantenimiento", "renovacion", "renovar", "licencia", "licencias"], a: "Damos soporte local en español durante y después de la implementación, nos encargamos de las renovaciones de licencias y, si lo necesitas, monitoreo 24/7." },
+    { k: ["demo", "prueba", "poc", "probar", "demostracion"], a: "Sí podemos organizar una demostración o una prueba en tu red. Escríbele a un asesor para agendarla.", acts: [{ wa: true, label: "Agendar demo" }] },
+    { k: ["contacto", "telefono", "correo", "email", "llamar", "whatsapp", "asesor", "humano", "persona"], a: "Puedes contactarnos por:\n• WhatsApp / teléfono: +52 56 1399 6126\n• Ventas: ventas@vivecom.mx\n• Información: info@vivecom.mx", acts: [{ wa: true, label: "Abrir WhatsApp" }] },
+    { k: ["tiempo", "tarda", "cuanto tiempo", "instalacion", "implementacion", "entrega"], a: "Depende del tamaño del proyecto: no es lo mismo un firewall para una oficina que un clúster con migración de servidores. En la propuesta te damos el calendario de implementación." , acts: [{ wa: true, label: "Preguntar a un asesor" }] },
+    { k: ["gracias", "excelente", "perfecto", "ok"], a: "¡Con gusto! Si te surge otra duda, aquí estoy." }
+  ];
+  const QUICK = ["¿Cuánto cuesta?", "Protección contra ransomware", "Trabajo remoto sin VPN", "Salir de VMware", "Hablar con un asesor"];
+
+  function answer(q) {
+    const t = " " + norm(q) + " ";
+    let best = null, score = 0;
+    for (const f of FAQ) {
+      let sc = 0;
+      for (const k of f.k) if (t.includes(" " + k + " ") || (k.length > 4 && t.includes(k))) sc += k.split(" ").length;
+      if (sc > score) { score = sc; best = f; }
+    }
+    if (!best) {
+      for (const p of PRODUCTS) if (t.includes(norm(p.name).trim()) || t.includes(" " + p.id + " ")) {
+        return { a: `${p.name}: ${p.desc}`, acts: [{ go: p.id, label: "Ver en catálogo" }, { add: p.id, label: "Agregar a cotización" }] };
+      }
+      return { a: "Esa no la sé responder bien todavía. Te paso con un asesor por WhatsApp para que te conteste directamente; tu pregunta ya va escrita.", acts: [{ wa: true, label: "Preguntar por WhatsApp" }], fallback: true };
+    }
+    return best;
+  }
+
+  const log = $("#botLog"), bot = $("#bot"), btn = $("#chatBtn");
+  function add(who, text, acts, q) {
+    const d = document.createElement("div");
+    d.className = "msg " + who;
+    d.textContent = text;
+    if (acts && acts.length) {
+      const box = document.createElement("div"); box.className = "acts";
+      for (const a of acts) {
+        let el;
+        if (a.wa || a.href) { el = document.createElement("a"); el.href = a.wa ? waLink(q) : a.href; if (a.wa) { el.target = "_blank"; el.rel = "noopener"; el.className = "wa"; } }
+        else { el = document.createElement("button"); el.type = "button"; if (a.go) el.dataset.go = a.go; if (a.add) el.dataset.add = a.add; }
+        el.textContent = a.label; box.appendChild(el);
+      }
+      d.appendChild(box);
+    }
+    log.appendChild(d); log.scrollTop = log.scrollHeight;
+  }
+  function ask(q) {
+    q = q.trim(); if (!q) return;
+    add("u", q);
+    const r = answer(q);
+    $("#botWa").href = waLink(q);
+    setTimeout(() => add("b", r.a, r.acts, q), 250);
+  }
+  function open(v) {
+    bot.hidden = !v; btn.hidden = v; btn.setAttribute("aria-expanded", String(v));
+    if (v) { if (!log.children.length) add("b", "¡Hola! Soy el asistente virtual de VIVEcom. Te respondo las dudas más comunes al momento; si no sé algo, te paso con un asesor por WhatsApp.\n\n¿En qué te ayudo?"); $("#botInput").focus(); }
+  }
+  $("#botQuick").innerHTML = QUICK.map(q => `<button type="button" data-q="${q}">${q}</button>`).join("");
+  btn.addEventListener("click", () => open(true));
+  $("#botClose").addEventListener("click", () => { open(false); btn.focus(); });
+  $("#botQuick").addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b) ask(b.dataset.q); });
+  $("#botForm").addEventListener("submit", e => { e.preventDefault(); const i = $("#botInput"); ask(i.value); i.value = ""; });
+  log.addEventListener("click", e => { if (e.target.closest("[data-go], [data-add], a[href^='#']")) open(false); });
+  $("#botWa").href = waLink("");
 })();
 
 $("#yr").textContent = new Date().getFullYear();
