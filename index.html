@@ -44,6 +44,7 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
+section[id], .prod { scroll-margin-top: 110px; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
 body { margin: 0; background: var(--bg); color: var(--fg); font: 16px/1.6 var(--f-body); }
@@ -212,7 +213,7 @@ footer a { color: var(--on-ink); }
       <a href="#inicio">Inicio</a>
       <a href="#servicios">Servicios</a>
       <a href="#soluciones">Soluciones</a>
-      <a href="#productos">Productos</a>
+      <a href="#productos">Catálogo</a>
       <a href="#nosotros">Nosotros</a>
       <a class="cta" href="#contacto">Cotizar</a>
     </nav>
@@ -229,7 +230,7 @@ footer a { color: var(--on-ink); }
       <p class="tagline">haz que las cosas sucedan</p>
       <p class="lead">Diseñamos, implementamos y damos soporte a soluciones de ciberseguridad y virtualización para empresas en México: firewall de nueva generación, protección contra ransomware, acceso Zero Trust e infraestructura hiperconvergente.</p>
       <div class="btns">
-        <a class="btn primary" href="#productos">Ver productos</a>
+        <a class="btn primary" href="#productos">Ver soluciones</a>
         <a class="btn ghost" href="#contacto">Solicitar cotización</a>
       </div>
     </div>
@@ -265,7 +266,7 @@ footer a { color: var(--on-ink); }
     <div class="sec-head">
       <span class="eyebrow">Soluciones</span>
       <h2>¿Qué necesitas resolver?</h2>
-      <p>Empieza por el problema. Toca un producto para verlo en el catálogo.</p>
+      <p>Empieza por el problema. Toca una opción para verla en el catálogo.</p>
     </div>
     <div class="needs" id="needs"></div>
   </div>
@@ -274,13 +275,13 @@ footer a { color: var(--on-ink); }
 <section class="band catalog-band" id="productos">
   <div class="wrap">
     <div class="sec-head">
-      <span class="eyebrow">Productos</span>
-      <h2>Catálogo completo</h2>
-      <p>Cada proyecto se cotiza a la medida: número de usuarios, sitios, ancho de banda y modalidad (equipo físico, virtual o en la nube). Agrega los productos que te interesan y te enviamos una propuesta.</p>
+      <span class="eyebrow">Lo que implementamos</span>
+      <h2>Catálogo de soluciones</h2>
+      <p>Cada proyecto se cotiza a la medida: número de usuarios, sitios, ancho de banda y modalidad (equipo físico, virtual o en la nube). Agrega las soluciones que te interesan y te enviamos una propuesta con la tecnología adecuada para tu empresa.</p>
     </div>
     <div class="filters" id="filters" role="toolbar" aria-label="Filtrar por categoría"></div>
     <div class="grid" id="grid"></div>
-    <p class="note">Las descripciones son un resumen. Pídenos la ficha técnica completa de cualquier producto junto con tu cotización.</p>
+    <p class="note">Las descripciones son un resumen. En tu propuesta te detallamos la tecnología, el alcance y la ficha técnica de cada solución.</p>
   </div>
 </section>
 
@@ -324,7 +325,7 @@ footer a { color: var(--on-ink); }
       </label>
       <label>Sitios o sucursales<input id="f-sites" name="sites" type="number" min="1" value="1"></label>
       <div class="full">
-        <label for="f-msg" style="margin-bottom:6px">Productos de interés</label>
+        <label for="f-msg" style="margin-bottom:6px">Soluciones de interés</label>
         <div class="picked" id="picked"></div>
       </div>
       <label class="full">Cuéntanos qué necesitas<textarea id="f-msg" name="msg" placeholder="Ej. Queremos cambiar el firewall de 3 sucursales y proteger 120 laptops contra ransomware."></textarea></label>
@@ -359,49 +360,49 @@ footer a { color: var(--on-ink); }
 
 <script>
 const PRODUCTS = [
-  { id:"ngfw", name:"Athena NGFW", cat:"red", catLabel:"Seguridad de red",
+  { id:"ngfw", name:"Firewall de nueva generación", cat:"red", catLabel:"Seguridad de red",
     desc:"Firewall de nueva generación con detección de malware por IA e inteligencia de amenazas para frenar ataques en el perímetro.",
     feats:["IPS, antivirus y filtrado de aplicaciones","SD-WAN y ZTNA integrados","Protección contra ransomware"], deploy:["Equipo físico","Virtual"] },
-  { id:"swg", name:"Athena SWG", cat:"red", catLabel:"Seguridad de red",
+  { id:"swg", name:"Filtrado web y control de navegación", cat:"red", catLabel:"Seguridad de red",
     desc:"Gateway web seguro para controlar qué sitios y aplicaciones usa tu personal, con autenticación y control de ancho de banda.",
     feats:["Filtrado de URL, dominios y apps","Gestión de ancho de banda","Prevención de fuga de datos (DLP)"], deploy:["Equipo físico","Virtual"] },
-  { id:"ndr", name:"Athena NDR", cat:"red", catLabel:"Seguridad de red",
+  { id:"ndr", name:"Detección de intrusos en la red", cat:"red", catLabel:"Seguridad de red",
     desc:"Detección y respuesta en la red: analiza el tráfico con aprendizaje automático para encontrar intrusos que ya están dentro.",
     feats:["Detección de comando y control (C2)","Movimiento lateral","Análisis de comportamiento"], deploy:["Equipo físico","Virtual"] },
-  { id:"epp", name:"Athena EPP", cat:"endpoint", catLabel:"Endpoint",
+  { id:"epp", name:"Protección de equipos contra ransomware", cat:"endpoint", catLabel:"Endpoint",
     desc:"Protección para laptops, PCs y servidores que combina antivirus de nueva generación, EDR y administración centralizada.",
     feats:["NGAV + EDR en un solo agente","Anti-ransomware con reversión","Consola central"], deploy:["Nube","En sitio"] },
-  { id:"esa", name:"Endpoint Secure Access", cat:"endpoint", catLabel:"Endpoint",
+  { id:"esa", name:"Seguridad para equipos sin agente", cat:"endpoint", catLabel:"Endpoint",
     desc:"Seguridad para equipos sin necesidad de instalar agente, con antivirus, prevención de intrusos y respuesta en un clic.",
     feats:["Sin agente","Prevención de intrusos","Respuesta con un clic"], deploy:["Nube"] },
-  { id:"xdr", name:"Athena XDR", cat:"soc", catLabel:"Operación de seguridad",
+  { id:"xdr", name:"Detección y respuesta extendida (XDR)", cat:"soc", catLabel:"Operación de seguridad",
     desc:"Detección y respuesta extendida: une firewall, endpoint y red en una sola consola y correlaciona los eventos con IA.",
-    feats:["Correlación de eventos multi-fuente","Respuesta automatizada","Integra Security GPT"], deploy:["Nube","En sitio"] },
-  { id:"mdr", name:"Athena MDR", cat:"soc", catLabel:"Operación de seguridad",
-    desc:"Servicio administrado de detección y respuesta: un centro de operaciones de seguridad (SOC) con más de 450 especialistas vigila tu red 24/7.",
+    feats:["Correlación de eventos multi-fuente","Respuesta automatizada","Análisis con IA"], deploy:["Nube","En sitio"] },
+  { id:"mdr", name:"Monitoreo de seguridad 24/7", cat:"soc", catLabel:"Operación de seguridad",
+    desc:"Servicio administrado de detección y respuesta: un centro de operaciones de seguridad (SOC) con especialistas vigila tu red 24/7 y responde por ti.",
     feats:["Monitoreo 24/7","Caza de amenazas","Reportes periódicos"], deploy:["Servicio"] },
-  { id:"gpt", name:"Security GPT", cat:"soc", catLabel:"Operación de seguridad",
-    desc:"Motor de IA generativa detrás de XDR y MDR para detectar amenazas, apoyar al analista y frenar el phishing.",
-    feats:["Detection GPT","Operations GPT","Anti-Phishing GPT"], deploy:["Incluido en XDR / MDR"] },
-  { id:"sase", name:"Athena SASE", cat:"acceso", catLabel:"Acceso seguro",
+  { id:"ia", name:"Análisis de amenazas con IA", cat:"soc", catLabel:"Operación de seguridad",
+    desc:"Inteligencia artificial que analiza los eventos de seguridad para detectar amenazas, apoyar al analista y frenar el phishing.",
+    feats:["Detección de amenazas","Apoyo al analista","Protección contra phishing"], deploy:["Complemento de XDR / monitoreo"] },
+  { id:"sase", name:"Red y seguridad en la nube (SASE)", cat:"acceso", catLabel:"Acceso seguro",
     desc:"Seguridad y red en la nube para sucursales y personal remoto: ZTNA, SWG, firewall como servicio, CASB y SD-WAN.",
     feats:["ZTNA, SWG, FWaaS y CASB","SD-WAN","Una sola política para todos"], deploy:["Nube"] },
-  { id:"ztg", name:"Zero Trust Guard", cat:"acceso", catLabel:"Acceso seguro",
+  { id:"ztg", name:"Acceso remoto sin VPN", cat:"acceso", catLabel:"Acceso seguro",
     desc:"Acceso remoto Zero Trust a tus aplicaciones internas. Reemplaza a la VPN tradicional y da acceso solo a lo necesario.",
     feats:["Reemplazo de VPN","Acceso por aplicación","Verificación continua"], deploy:["Nube"] },
-  { id:"sga", name:"Secured Global Access", cat:"acceso", catLabel:"Acceso seguro",
+  { id:"sga", name:"Navegación segura desde cualquier lugar", cat:"acceso", catLabel:"Acceso seguro",
     desc:"Protección de la navegación a internet desde cualquier lugar, sin regresar el tráfico a la oficina central.",
     feats:["SWG + NGFW en la nube","Sin backhaul","Ideal para sucursales"], deploy:["Nube"] },
-  { id:"hci", name:"HCI Hiperconvergente", cat:"infra", catLabel:"Infraestructura y nube",
+  { id:"hci", name:"Infraestructura hiperconvergente", cat:"infra", catLabel:"Infraestructura y nube",
     desc:"Infraestructura hiperconvergente: cómputo, almacenamiento, red y seguridad virtualizados en un clúster fácil de administrar.",
     feats:["Hipervisor, SDS y SDN integrados","Migración desde VMware","Respaldo y recuperación"], deploy:["Equipo físico","Software"] },
-  { id:"scp", name:"Cloud Platform", cat:"infra", catLabel:"Infraestructura y nube",
+  { id:"scp", name:"Nube privada e híbrida", cat:"infra", catLabel:"Infraestructura y nube",
     desc:"Plataforma para operar una nube privada o híbrida sobre HCI, con portal de autoservicio y administración multi-sitio.",
     feats:["Nube privada e híbrida","Autoservicio","Multi-sitio"], deploy:["Software"] },
-  { id:"adesk", name:"aDesk VDI", cat:"infra", catLabel:"Infraestructura y nube",
+  { id:"vdi", name:"Escritorios virtuales", cat:"infra", catLabel:"Infraestructura y nube",
     desc:"Escritorios virtuales para que tu equipo trabaje desde cualquier dispositivo, con los datos siempre en tu centro de datos.",
     feats:["Escritorios Windows virtuales","Clientes ligeros","Administración central"], deploy:["Equipo físico","Software"] },
-  { id:"astor", name:"aStor", cat:"infra", catLabel:"Infraestructura y nube",
+  { id:"storage", name:"Almacenamiento empresarial", cat:"infra", catLabel:"Infraestructura y nube",
     desc:"Almacenamiento empresarial definido por software, con opciones all-flash para bloques, archivos y objetos.",
     feats:["Bloque, archivo y objeto","All-flash","Escalamiento horizontal"], deploy:["Equipo físico"] }
 ];
@@ -419,9 +420,9 @@ const NEEDS = [
   { t:"Proteger mi red y mis sucursales", d:"Cambia tu firewall por uno de nueva generación y controla la navegación.", p:["ngfw","swg","sase"] },
   { t:"Evitar un ataque de ransomware", d:"Protege cada equipo y detecta al intruso antes de que cifre tu información.", p:["epp","ndr","xdr"] },
   { t:"Trabajo remoto sin VPN", d:"Da acceso a tus aplicaciones solo a quien debe, desde donde esté.", p:["ztg","sga","sase"] },
-  { t:"Modernizar o salir de VMware", d:"Consolida servidores en un clúster hiperconvergente y simplifica tu centro de datos.", p:["hci","scp","astor"] },
-  { t:"Escritorios virtuales", d:"Entrega escritorios seguros a call centers, sucursales o personal externo.", p:["adesk","hci"] },
-  { t:"No tengo equipo de seguridad", d:"Deja la vigilancia 24/7 en manos de especialistas.", p:["mdr","xdr","gpt"] }
+  { t:"Modernizar o salir de VMware", d:"Consolida servidores en un clúster hiperconvergente y simplifica tu centro de datos.", p:["hci","scp","storage"] },
+  { t:"Escritorios virtuales", d:"Entrega escritorios seguros a call centers, sucursales o personal externo.", p:["vdi","hci"] },
+  { t:"No tengo equipo de seguridad", d:"Deja la vigilancia 24/7 en manos de especialistas.", p:["mdr","xdr","ia"] }
 ];
 
 const $ = s => document.querySelector(s);
@@ -458,7 +459,7 @@ function renderNeeds() {
 function renderPicked() {
   $("#picked").innerHTML = picked.size
     ? [...picked].map(id => `<button type="button" class="chip" data-remove="${id}" aria-label="Quitar ${byId[id].name}">${byId[id].name}</button>`).join("")
-    : `<span class="empty">Aún no agregas productos. Usa "Solicitar cotización" en el catálogo.</span>`;
+    : `<span class="empty">Aún no agregas soluciones. Usa "Solicitar cotización" en el catálogo.</span>`;
 }
 
 document.addEventListener("click", e => {
@@ -492,7 +493,7 @@ $("#quoteForm").addEventListener("submit", e => {
   const prods = [...picked].map(id => byId[id].name).join(", ") || "Por definir";
   const body = [
     `Nombre: ${f.name.value}`, `Empresa: ${f.company.value}`, `Correo: ${f.email.value}`, `Teléfono: ${f.phone.value}`,
-    `Usuarios/equipos: ${f.size.value}`, `Sitios: ${f.sites.value}`, `Productos: ${prods}`, "", f.msg.value
+    `Usuarios/equipos: ${f.size.value}`, `Sitios: ${f.sites.value}`, `Soluciones: ${prods}`, "", f.msg.value
   ].join("\n");
   const href = `mailto:ventas@vivecom.mx?subject=${encodeURIComponent("Solicitud de cotización - " + (f.company.value || f.name.value))}&body=${encodeURIComponent(body)}`;
   window.location.href = href;
@@ -533,17 +534,17 @@ $("#quoteForm").addEventListener("submit", e => {
   const norm = t => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9ñ ]/g, " ");
   const prodBtns = ids => ids.map(id => ({ go: id, label: byId[id].name }));
   const FAQ = [
-    { k: ["hola", "buenas", "buenos dias", "buenas tardes", "que tal"], a: "¡Hola! Soy el asistente de VIVEcom. Pregúntame sobre nuestros productos de ciberseguridad, nube y virtualización, cómo cotizar o cómo trabajamos." },
-    { k: ["precio", "precios", "costo", "cuesta", "cuanto", "tarifa", "presupuesto", "cotizacion", "cotizar"], a: "Cada proyecto se cotiza a la medida: depende del número de usuarios o equipos, de cuántos sitios tienes y de si lo quieres en equipo físico, virtual o en la nube.\n\nAgrega los productos que te interesan en el catálogo y llena el formulario, o escríbele a un asesor. Respondemos en menos de un día hábil.", acts: [{ href: "#contacto", label: "Ir al formulario" }, { wa: true, label: "Cotizar por WhatsApp" }] },
-    { k: ["que venden", "que hacen", "servicios", "que ofrecen", "productos", "catalogo"], a: "Diseñamos, implementamos y damos soporte a soluciones de:\n• Seguridad de red (firewall, filtrado web, detección en la red)\n• Protección de equipos (antivirus de nueva generación, EDR)\n• Operación de seguridad (XDR y monitoreo 24/7)\n• Acceso remoto seguro sin VPN y SASE\n• Virtualización: HCI, nube privada, escritorios virtuales y almacenamiento", acts: [{ href: "#productos", label: "Ver catálogo" }] },
+    { k: ["hola", "buenas", "buenos dias", "buenas tardes", "que tal"], a: "¡Hola! Soy el asistente de VIVEcom. Pregúntame sobre nuestras soluciones de ciberseguridad, nube y virtualización, cómo cotizar o cómo trabajamos." },
+    { k: ["precio", "precios", "costo", "cuesta", "cuanto", "tarifa", "presupuesto", "cotizacion", "cotizar"], a: "Cada proyecto se cotiza a la medida: depende del número de usuarios o equipos, de cuántos sitios tienes y de si lo quieres en equipo físico, virtual o en la nube.\n\nAgrega las soluciones que te interesan en el catálogo y llena el formulario, o escríbele a un asesor. Respondemos en menos de un día hábil.", acts: [{ href: "#contacto", label: "Ir al formulario" }, { wa: true, label: "Cotizar por WhatsApp" }] },
+    { k: ["que venden", "que hacen", "servicios", "que ofrecen", "productos", "soluciones", "catalogo"], a: "Diseñamos, implementamos y damos soporte a soluciones de:\n• Seguridad de red (firewall, filtrado web, detección en la red)\n• Protección de equipos (antivirus de nueva generación, EDR)\n• Operación de seguridad (XDR y monitoreo 24/7)\n• Acceso remoto seguro sin VPN y SASE\n• Virtualización: HCI, nube privada, escritorios virtuales y almacenamiento", acts: [{ href: "#productos", label: "Ver catálogo" }] },
     { k: ["ransomware", "secuestro", "cifraron", "virus", "malware", "hackeo", "hackearon", "ataque"], a: "Para ransomware recomendamos protección en capas: el agente en cada equipo para frenar el cifrado, detección en la red para encontrar al intruso, y XDR para ver todo en una consola.\n\nSi estás sufriendo un ataque en este momento, escríbenos por WhatsApp de inmediato.", acts: [...prodBtns(["epp", "ndr", "xdr"]), { wa: true, label: "Tengo una emergencia" }] },
     { k: ["firewall", "perimetro", "red", "sucursal", "sucursales", "internet", "navegacion", "filtrado", "sd wan", "sdwan"], a: "Para proteger tu red y sucursales: un firewall de nueva generación (IPS, antivirus y control de apps, con SD-WAN integrado), filtrado web para controlar la navegación, o SASE si tienes muchas sucursales o gente fuera de la oficina.", acts: prodBtns(["ngfw", "swg", "sase"]) },
     { k: ["vpn", "remoto", "home office", "casa", "teletrabajo", "zero trust", "ztna", "acceso"], a: "Para trabajo remoto sin VPN usamos acceso Zero Trust: cada persona entra solo a las aplicaciones que necesita, verificando identidad y equipo todo el tiempo. Es más seguro y más simple que una VPN.", acts: prodBtns(["ztg", "sga", "sase"]) },
     { k: ["antivirus", "endpoint", "laptop", "laptops", "computadoras", "equipos", "pc", "servidores", "edr"], a: "Para laptops, PCs y servidores: un solo agente con antivirus de nueva generación, EDR y reversión de ransomware, administrado desde una consola central (en la nube o en sitio). También hay opción sin agente.", acts: prodBtns(["epp", "esa"]) },
-    { k: ["vmware", "virtualizar", "virtualizacion", "hiperconvergente", "hci", "servidor", "data center", "centro de datos", "nube privada", "migrar", "broadcom"], a: "Para modernizar tu centro de datos o salir de VMware: infraestructura hiperconvergente que junta cómputo, almacenamiento y red en un clúster fácil de administrar, con herramienta de migración desde VMware. Encima puedes montar una nube privada.", acts: prodBtns(["hci", "scp", "astor"]) },
-    { k: ["vdi", "escritorio", "escritorios", "call center", "cliente ligero", "thin client"], a: "Con escritorios virtuales tu equipo trabaja desde cualquier dispositivo y los datos nunca salen de tu centro de datos. Ideal para call centers, sucursales y personal externo.", acts: prodBtns(["adesk", "hci"]) },
-    { k: ["almacenamiento", "storage", "nas", "san", "respaldo", "backup", "disco"], a: "Tenemos almacenamiento empresarial definido por software, con opciones all-flash para bloques, archivos y objetos, y respaldo integrado en la plataforma HCI.", acts: prodBtns(["astor", "hci"]) },
-    { k: ["soc", "monitoreo", "24 7", "24x7", "vigilancia", "no tengo equipo", "mdr", "xdr", "analista"], a: "Si no tienes equipo de seguridad, el servicio MDR pone a un centro de operaciones con más de 450 especialistas a vigilar tu red 24/7, cazar amenazas y responder por ti.", acts: prodBtns(["mdr", "xdr"]) },
+    { k: ["vmware", "virtualizar", "virtualizacion", "hiperconvergente", "hci", "servidor", "data center", "centro de datos", "nube privada", "migrar", "broadcom"], a: "Para modernizar tu centro de datos o salir de VMware: infraestructura hiperconvergente que junta cómputo, almacenamiento y red en un clúster fácil de administrar, con herramienta de migración desde VMware. Encima puedes montar una nube privada.", acts: prodBtns(["hci", "scp", "storage"]) },
+    { k: ["vdi", "escritorio", "escritorios", "call center", "cliente ligero", "thin client"], a: "Con escritorios virtuales tu equipo trabaja desde cualquier dispositivo y los datos nunca salen de tu centro de datos. Ideal para call centers, sucursales y personal externo.", acts: prodBtns(["vdi", "hci"]) },
+    { k: ["almacenamiento", "storage", "nas", "san", "respaldo", "backup", "disco"], a: "Tenemos almacenamiento empresarial definido por software, con opciones all-flash para bloques, archivos y objetos, y respaldo integrado en la plataforma HCI.", acts: prodBtns(["storage", "hci"]) },
+    { k: ["soc", "monitoreo", "24 7", "24x7", "vigilancia", "no tengo equipo", "mdr", "xdr", "analista"], a: "Si no tienes equipo de seguridad, el monitoreo 24/7 pone a un centro de operaciones con especialistas a vigilar tu red 24/7, cazar amenazas y responder por ti.", acts: prodBtns(["mdr", "xdr"]) },
     { k: ["soporte", "garantia", "mantenimiento", "renovacion", "renovar", "licencia", "licencias"], a: "Damos soporte local en español durante y después de la implementación, nos encargamos de las renovaciones de licencias y, si lo necesitas, monitoreo 24/7." },
     { k: ["demo", "prueba", "poc", "probar", "demostracion"], a: "Sí podemos organizar una demostración o una prueba en tu red. Escríbele a un asesor para agendarla.", acts: [{ wa: true, label: "Agendar demo" }] },
     { k: ["contacto", "telefono", "correo", "email", "llamar", "whatsapp", "asesor", "humano", "persona"], a: "Puedes contactarnos por:\n• WhatsApp / teléfono: +52 56 1399 6126\n• Ventas: ventas@vivecom.mx\n• Información: info@vivecom.mx", acts: [{ wa: true, label: "Abrir WhatsApp" }] },
